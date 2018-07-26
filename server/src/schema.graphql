@@ -1,0 +1,44 @@
+# import Budget from "./generated/prisma.graphql"
+# import Category from "./generated/prisma.graphql"
+# import Expense from "./generated/prisma.graphql"
+
+type Query {
+  budgets: [Budget!]!
+  categorys: [Category!]!
+  expenses: [Expense!]!
+  budget(id: ID!): Budget
+  category(id: ID!): Category
+  expense(id: ID!): Expense
+  me: User
+}
+
+type Mutation {
+  signup(email: String!, password: String!, name: String!): AuthPayload!
+  login(email: String!, password: String!): AuthPayload!
+  setBudget(label: String!, note: String!): Budget!
+  setCategory(category_name: String!): Category!
+  setExpense(exp_name: String!,  exp_amt: Float!): Expense!
+  reviseBudget(id: ID! ): Budget!
+  reviseCategory(id: ID!): Category!
+  reviseExpense(id: ID!): Expense!
+  removeBudget(id: ID!): Budget!
+  removeCategory(id: ID!): Category!
+  removeExpense(id: ID!): Expense!}
+
+#type Subscription {
+#  feedSubscription: PostSubscriptionPayload!
+#}
+
+type AuthPayload {
+  token: String!
+  user: User!
+}
+
+type User {
+  id: ID!
+  email: String!
+  name: String!
+  budgets: [Budget!]!
+  categorys: [Category!]!
+  expenses: [Expense!]!
+}

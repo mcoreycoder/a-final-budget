@@ -1,0 +1,222 @@
+https://us1.prisma.sh/fishincorey/a-final-budget/dev
+-----------------------------------------
+
+query {
+  users {
+    id
+    email
+    name
+    password
+  }
+}
+
+-----------------------------------------
+
+mutation {
+  createUser(
+    data:{
+      email: "test it again and again"
+      password: "hope"
+      name: "joy"
+    })
+  {
+    id
+    name
+    email
+    password
+
+  }
+}
+
+-----------------------------------------
+
+mutation {
+  deleteUser(where: {id: "cjk1buqb0igj70b02ad6mdu64"}){
+    id
+  }
+}
+
+-----------------------------------------
+
+mutation {
+  updateUser (
+    data: {name: "joy to the world"}
+    where:{id: "cjk0lbsj78wk80b02eapys9ge"})
+  {
+    id
+    name
+  }
+}
+
+-----------------------------------------
+
+http://localhost:4000/                                    http://localhost:4000/
+-----------------------------------------
+'create new user and get back token that can be added to the http header and perform the below mutations under the login'
+mutation {
+  signup(
+      email: "my@example.com"
+      password: "nooneknows"
+      name: "just me"
+  )
+  {
+    token
+    user {
+      name
+      email
+    }
+  }
+}
+
+-----------------------------------------
+mutation {
+  login(
+      email: "developer@example.com"
+      password: "nooneknows"
+  )
+  {
+    token
+    user {
+      name
+    }
+  }
+}
+
+'gave back info below that was entered into the http header to allow below'
+{ "Authorization" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjamp6emNxczZ5Nmk3MGIwMjQxYzVma293IiwiaWF0IjoxNTMyNTM3MDc5fQ.u8FbzOiZ0tVrkD1ycNCD8skYdzFdqdIGd9PzVDJZrAU"}
+-----------------------------------------
+
+mutation {
+  setBudget (
+    label: "hoping for the best"
+    note: "this better work! again!"
+  ){
+    id
+    label
+    note
+    author {
+      id
+      name
+      email
+    }
+  }
+}
+
+-----------------------------------------
+
+mutation {
+  reviseBudget (id : "cjk1fl6khl4ep0b02pg6214td")
+  {
+    id
+    label
+  }
+}
+
+-----------------------------------------
+
+query {
+  budget(id: "cjk1fl6khl4ep0b02pg6214td")
+  {
+    id
+  label
+  }
+}
+
+-----------------------------------------
+
+query {
+  me{
+    budgets {
+      id
+      label
+    }
+  }
+}
+
+-----------------------------------------
+
+mutation{
+  removeBudget(id : "cjk1lxqfjta070b02cis3bs5v")
+  {
+    id
+    label
+  }
+}
+
+-----------------------------------------
+
+mutation {
+  setExpense (
+    exp_name: "toyz"
+    exp_amt: 5000
+  ){
+    id
+    exp_name
+    exp_amt
+  }
+}
+
+-----------------------------------------
+
+mutation {
+  setCategory (
+    category_name: "toyz"
+  ){
+    id
+     category_name
+  }
+}
+
+-----------------------------------------
+
+
+
+-----------------------------------------
+
+
+
+-----------------------------------------
+
+
+-----------------------------------------
+
+
+-----------------------------------------
+
+
+-----------------------------------------
+
+
+-----------------------------------------
+
+
+-----------------------------------------
+
+
+-----------------------------------------
+
+
+-----------------------------------------
+
+
+-----------------------------------------
+
+
+-----------------------------------------
+
+
+-----------------------------------------
+
+
+-----------------------------------------
+
+
+-----------------------------------------
+
+
+-----------------------------------------
+
+
+-----------------------------------------
+
+

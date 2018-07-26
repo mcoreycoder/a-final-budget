@@ -1,0 +1,49 @@
+mutation {
+  createUser(data: {
+    email: "team@unicorn.com"
+    password: "$2a$10$hACwQ5/HQI6FhbIISOUVeusy3sKyUDhSq36fF5d/54aAdiygJPFzm" # plaintext password: "nooneknows"
+    name: "Unicorn"
+    budgets: {
+      create: [{
+        label: "Group Project"
+        note: "For funding the teams success!"
+        categorys: {
+          create: [{
+            category_name: "Party Supplies"
+            expenses: {
+              create: [{
+                exp_name: "Soda"
+                exp_amt: 20.00
+              }]
+              create: [{
+                exp_name: "Pizza"
+                exp_amt: 30.00
+              }]
+            }
+          }]
+        }
+      }]
+      create: [{
+        label: "Summer Trip"
+        notes: "Vacation!"
+        categorys: {
+          create: [{
+            category_name: "Supplies"
+            expenses: {
+              create: [{
+                exp_name: "Food"
+                exp_amt: 100.00
+              }]
+              create: [{
+                exp_name: "Gas"
+                exp_amt: 300.00
+              }]
+            }
+          }]
+        }
+      }]
+    }
+  }) {
+    id
+  }
+}
