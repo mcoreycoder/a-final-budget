@@ -169,11 +169,23 @@ mutation {
 
 -----------------------------------------
 
-
+mutation {
+  reviseCategory (id : "cjk31j81tjbh90b02pikpu46h")
+  {
+    id
+    category_name
+  }
+}
 
 -----------------------------------------
 
-
+mutation{
+  removeCategory(id : "cjk326nc3jesl0b021j0dawih")
+  {
+    id
+    category_name
+  }
+}
 
 -----------------------------------------
 

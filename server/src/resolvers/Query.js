@@ -2,6 +2,7 @@ const { getUserId } = require('../utils')
 
 const Query = {
   budgets(parent, args, ctx, info) {
+    const id = getUserId(ctx)
     const where = {
       author: {
         id
@@ -12,6 +13,7 @@ const Query = {
   },
 
   categorys(parent, args, ctx, info) {
+    const id = getUserId(ctx)
     const where = {
       author: {
         id
@@ -22,6 +24,7 @@ const Query = {
   },
 
   expenses(parent, args, ctx, info) {
+    const id = getUserId(ctx)
     const where = {
       author: {
         id

@@ -17,7 +17,7 @@ const budget = {
     )
   },
 
-  async reviseBudget(parent, { id }, ctx, info) {
+  async reviseBudget(parent, { id, label, note }, ctx, info) {
     const userId = getUserId(ctx)
     const budgetExists = await ctx.db.exists.Budget({
       id,
@@ -29,8 +29,11 @@ const budget = {
 
     return ctx.db.mutation.updateBudget(
       {
-        where: { id },
-        data: { label: "somenewLabel" },
+        where: {id},
+        data: {
+          label,
+          note,
+        },
       },
       info,
     )

@@ -18,7 +18,7 @@ type Mutation {
   setBudget(label: String!, note: String!): Budget!
   setCategory(category_name: String!): Category!
   setExpense(exp_name: String!,  exp_amt: Float!): Expense!
-  reviseBudget(id: ID! ): Budget!
+  reviseBudget(id: ID!, label: String!, note: String!): Budget!
   reviseCategory(id: ID!): Category!
   reviseExpense(id: ID!): Expense!
   removeBudget(id: ID!): Budget!

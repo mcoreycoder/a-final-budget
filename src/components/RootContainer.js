@@ -10,7 +10,7 @@ import {
 import FeedPage from './FeedPage'
 import DraftsPage from './DraftsPage'
 import CreatePage from './CreatePage'
-import DetailPage from './DetailPage'
+// import DetailPage from './DetailPage'
 import LoginPage from './LoginPage'
 import SignupPage from './SignupPage'
 import PageNotFound from './PageNotFound'
@@ -19,6 +19,10 @@ import { AUTH_TOKEN } from '../constant'
 import { isTokenExpired } from '../helper/jwtHelper'
 import { graphql } from 'react-apollo'
 import  { gql } from 'apollo-boost'
+import BudgetsPage from './budget/BudgetsPage'
+import CreateBudget from './budget/CreateBudget'
+import BudgetDetail from './budget/BudgetDetail'
+
 
 const ProtectedRoute = ({ component: Component, token, ...rest }) => {
   return token ? (
@@ -100,19 +104,32 @@ class RootContainer extends Component {
         >
           Feed
         </NavLink>
+        {/*{this.props.data &&*/}
+          {/*this.props.data.me &&*/}
+          {/*this.props.data.me.email &&*/}
+          {/*this.state.token && (*/}
+            {/*<NavLink*/}
+              {/*className="link dim f6 f5-ns dib mr3 black"*/}
+              {/*activeClassName="gray"*/}
+              {/*exact={true}*/}
+              {/*to="/drafts"*/}
+              {/*title="Drafts"*/}
+            {/*>*/}
+              {/*Drafts*/}
+            {/*</NavLink>*/}
         {this.props.data &&
           this.props.data.me &&
           this.props.data.me.email &&
           this.state.token && (
-            <NavLink
-              className="link dim f6 f5-ns dib mr3 black"
-              activeClassName="gray"
-              exact={true}
-              to="/drafts"
-              title="Drafts"
-            >
-              Drafts
-            </NavLink>
+             <NavLink
+             className="link dim f6 f5-ns dib mr3 black"
+             activeClassName="gray"
+             exact={true}
+             to="/budgets"
+             title="Budgets"
+             >
+             Budgets
+             </NavLink>
           )}
         {this.state.token ? (
           <div
@@ -135,17 +152,28 @@ class RootContainer extends Component {
             Login
           </Link>
         )}
+        {/*{this.props.data &&*/}
+          {/*this.props.data.me &&*/}
+          {/*this.props.data.me.email &&*/}
+          {/*this.state.token && (*/}
+            {/*<Link*/}
+              {/*to="/create"*/}
+              {/*className="f6 link dim br1 ba ph3 pv2 fr mb2 dib black"*/}
+            {/*>*/}
+              {/*+ Create Draft*/}
+            {/*</Link>*/}
+          {/*)}*/}
         {this.props.data &&
-          this.props.data.me &&
-          this.props.data.me.email &&
-          this.state.token && (
-            <Link
-              to="/create"
-              className="f6 link dim br1 ba ph3 pv2 fr mb2 dib black"
-            >
-              + Create Draft
-            </Link>
-          )}
+        this.props.data.me &&
+        this.props.data.me.email &&
+        this.state.token && (
+          <Link
+            to="/createBudget"
+            className="f6 link dim br1 ba ph3 pv2 fr mb2 dib black"
+          >
+            + Create Budget
+          </Link>
+        )}
       </nav>
     )
   }
@@ -165,7 +193,17 @@ class RootContainer extends Component {
             path="/create"
             component={CreatePage}
           />
-          <Route path="/post/:id" component={DetailPage} />
+        <ProtectedRoute
+          token={this.state.token}
+          path="/budgets"
+          component={BudgetsPage}
+        />
+          <ProtectedRoute
+            token={this.state.token}
+            path="/createBudget"
+            component={CreateBudget}
+          />
+          <Route path="/budget/:id" component={BudgetDetail} />
           <Route
             token={this.state.token}
             path="/login"
