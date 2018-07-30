@@ -7,9 +7,9 @@ import {
   Switch,
   Redirect,
 } from 'react-router-dom'
-import FeedPage from './FeedPage'
-import DraftsPage from './DraftsPage'
-import CreatePage from './CreatePage'
+// import FeedPage from './FeedPage'
+// import DraftsPage from './DraftsPage'
+// import CreatePage from './CreatePage'
 // import DetailPage from './DetailPage'
 import LoginPage from './LoginPage'
 import SignupPage from './SignupPage'
@@ -22,6 +22,7 @@ import  { gql } from 'apollo-boost'
 import BudgetsPage from './budget/BudgetsPage'
 import CreateBudget from './budget/CreateBudget'
 import BudgetDetail from './budget/BudgetDetail'
+// import ReviseBudget from './budget/ReviseBudget'
 
 
 const ProtectedRoute = ({ component: Component, token, ...rest }) => {
@@ -92,18 +93,18 @@ class RootContainer extends Component {
   renderNavBar() {
     return (
       <nav className="pa3 pa4-ns">
-        <Link className="link dim black b f6 f5-ns dib mr3" to="/" title="Feed">
-          Blog
-        </Link>
-        <NavLink
-          className="link dim f6 f5-ns dib mr3 black"
-          activeClassName="gray"
-          exact={true}
-          to="/"
-          title="Feed"
-        >
-          Feed
-        </NavLink>
+        {/*<Link className="link dim black b f6 f5-ns dib mr3" to="/" title="Feed">*/}
+          {/*Blog*/}
+        {/*</Link>*/}
+        {/*<NavLink*/}
+          {/*className="link dim f6 f5-ns dib mr3 black"*/}
+          {/*activeClassName="gray"*/}
+          {/*exact={true}*/}
+          {/*to="/"*/}
+          {/*title="Feed"*/}
+        {/*>*/}
+          {/*Feed*/}
+        {/*</NavLink>*/}
         {/*{this.props.data &&*/}
           {/*this.props.data.me &&*/}
           {/*this.props.data.me.email &&*/}
@@ -182,17 +183,17 @@ class RootContainer extends Component {
     return (
       <div className="fl w-100 pl4 pr4">
         <Switch>
-          <Route exact path="/" component={FeedPage} />
-          <ProtectedRoute
-            token={this.state.token}
-            path="/drafts"
-            component={DraftsPage}
-          />
-          <ProtectedRoute
-            token={this.state.token}
-            path="/create"
-            component={CreatePage}
-          />
+          {/*<Route exact path="/" component={FeedPage} />*/}
+          {/*<ProtectedRoute*/}
+            {/*token={this.state.token}*/}
+            {/*path="/drafts"*/}
+            {/*component={DraftsPage}*/}
+          {/*/>*/}
+          {/*<ProtectedRoute*/}
+            {/*token={this.state.token}*/}
+            {/*path="/create"*/}
+            {/*component={CreatePage}*/}
+          {/*/>*/}
         <ProtectedRoute
           token={this.state.token}
           path="/budgets"
@@ -204,6 +205,7 @@ class RootContainer extends Component {
             component={CreateBudget}
           />
           <Route path="/budget/:id" component={BudgetDetail} />
+          {/*<Route path="/budget/:id" component={ReviseBudget} />    //creating route to revise budget*/}
           <Route
             token={this.state.token}
             path="/login"

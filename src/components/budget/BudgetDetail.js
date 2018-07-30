@@ -3,6 +3,7 @@ import { graphql, compose } from 'react-apollo'
 import { withRouter } from 'react-router-dom'
 import  { gql } from 'apollo-boost'
 
+
 class BudgetDetail extends Component {
   render() {
     if (this.props.budgetQuery.loading) {
@@ -26,32 +27,25 @@ class BudgetDetail extends Component {
     )
   }
 
-  _renderAction = ({ id, isPublished }) => {
-    if (!isPublished) {
-      return (
-        <Fragment>
-          <a
-            className="f6 dim br1 ba ph3 pv2 mb2 dib black pointer"
-            onClick={() => this.updateBudget(id)}
-          >
-            Edit
-          </a>{' '}
-          <a
-            className="f6 dim br1 ba ph3 pv2 mb2 dib black pointer"
-            onClick={() => this.deleteBudget(id)}
-          >
-            Delete
-          </a>
-        </Fragment>
-      )
-    }
+  _renderAction = ({id}) => {
     return (
-      <a
-        className="f6 dim br1 ba ph3 pv2 mb2 dib black pointer"
-        onClick={() => this.deleteBudget(id)}
-      >
-        Delete
-      </a>
+      <Fragment>
+
+
+        <a
+          className="f6 dim br1 ba ph3 pv2 mb2 dib black pointer"
+          onClick={() =>
+            this.reviseBudget(id)}
+        >
+          Revise Budget Details
+        </a>{' '}
+        <a
+          className="f6 dim br1 ba ph3 pv2 mb2 dib black pointer"
+          onClick={() => this.deleteBudget(id)}
+        >
+          Delete
+        </a>
+      </Fragment>
     )
   }
 
@@ -62,11 +56,11 @@ class BudgetDetail extends Component {
     this.props.history.replace('/budgets')
   }
 
-  updateBudget = async id => {
-    await this.props.updateBudget({
+  reviseBudget = async id => {
+    await this.props.reviseBudget({
       variables: { id },
     })
-    this.props.history.replace('/budgets')
+    this.props.history.replace(`/budget/${this.props.budget.id}`) // updated this line to redirect to budget that was being updated
   }
 }
 
@@ -83,8 +77,9 @@ const BUDGET_QUERY = gql`
   }
 `
 
-const UPDATEBUDGET_MUTATION = gql`
-  mutation updateBudget($id: ID!, $label: String!, $note: String!) {
+//this is what give the errors (second line label and note)
+const REVISEBUDGET_MUTATION = gql`
+  mutation reviseBudget($id: ID!, $label: String!, $note: String!) {
     reviseBudget(id: $id, label: $label, note: $note) {
       id
       label
@@ -92,6 +87,7 @@ const UPDATEBUDGET_MUTATION = gql`
     }
   }
 `
+
 
 const DELETE_MUTATION = gql`
   mutation deleteBudget($id: ID!) {
@@ -110,8 +106,17 @@ export default compose(
       },
     }),
   }),
-  graphql(UPDATEBUDGET_MUTATION, {
-    name: 'updateBudget',
+  graphql(REVISEBUDGET_MUTATION, {
+    name: 'reviseBudget',
+    //added below to
+    options: props => ({
+      variables: {
+        id: props.match.params.id,
+        // label: props.match.params.label,
+        // note: props.match.params.note,
+      },
+    }),
+    //added above
   }),
   graphql(DELETE_MUTATION, {
     name: 'deleteBudget',
