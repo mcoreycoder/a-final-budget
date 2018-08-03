@@ -39,10 +39,10 @@ class BudgetDetail extends Component {
         <p className="black-80 fw3">{budget.note}</p>
         {/*{action}*/}
         <div>
-          <h1 className="f3 black-80 fw4 lh-solid">Label: {this.state.label}</h1>
+          <h1 className="f3 black-80 fw4 lh-solid">Label: {this.state.inputLabel}</h1>
           {this.renderInputField1()}
           <br/>
-          <p className="black-80 fw3">Note: {this.state.note}</p>
+          <p className="black-80 fw3">Note: {this.state.inputNote}</p>
           {this.renderInputField2()}
 
           {/*<h1 className="f3 black-80 fw4 lh-solid">Label: {budget.label}</h1>*/}
@@ -96,9 +96,10 @@ class BudgetDetail extends Component {
       return (
         <p>
           <input
-            placeholder={this.props.label}
+            placeholder= "how do I call props here"
             onChange={this.handleChange}
-            value1={this.state.inputLabel}
+            value={this.state.inputLabel}
+            name = 'inputLabel'
             // value={this.state.inputText}
           />
         </p>
@@ -112,9 +113,10 @@ class BudgetDetail extends Component {
       return (
         <p>
           <input
-            placeholder={this.props.note}
+            placeholder= "how do I call props here"
             onChange={this.handleChange}
-            value2={this.state.inputNote}
+            value={this.state.inputNote}
+            name = 'inputNote'
             // value={this.state.inputText}
           />
         </p>
@@ -137,12 +139,29 @@ class BudgetDetail extends Component {
     this.props.history.replace(`/budget/${this.props.budget.id}`) // updated this line to redirect to budget that was being updated
   }
 
+  // handleChange(e) {
+  //   this.setState({
+  //     inputLabel: e.target.value1,
+  //     inputNote: e.target.value2,
+  //   });
+  // }
+
+  //trying below for two value targets, seems to work but not as intended
   handleChange(e) {
-    this.setState({ inputLabel: e.target.value1, inputNote: e.target.value2 });
+    const target = e.target;
+    const value = target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value
+    });
   }
 
   handleSave() {
-    this.setState({label: this.state.inputLabel, note: this.state.inputNote, mode: 'view'});
+    this.setState({
+      label: this.state.inputLabel,
+      note: this.state.inputNote,
+      mode: 'view'});
   }
 
   handleEdit() {
