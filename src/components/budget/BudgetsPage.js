@@ -29,7 +29,7 @@ class BudgetsPage extends Component {
             <Budget
               key={budget.id}
               budget={budget}
-              refresh={() => this.props.budgetsQuery.refetch()}
+              // refresh={() => this.props.budgetsQuery.refetch()}
             />
           ))}
         {this.props.children}

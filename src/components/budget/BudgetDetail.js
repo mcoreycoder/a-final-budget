@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { graphql, compose } from 'react-apollo'
 import { withRouter } from 'react-router-dom'
 import  { gql } from 'apollo-boost'
+// import  ReviseBudget from '../budget/ReviseBudget'
 
 
 class BudgetDetail extends Component {
@@ -28,17 +29,30 @@ class BudgetDetail extends Component {
   }
 
   _renderAction = ({id}) => {
+
+
     return (
       <Fragment>
 
+        {/*<a*/}
+        {/*className="f6 dim br1 ba ph3 pv2 mb2 dib black pointer"*/}
+        {/*onClick={() => this.reviseBudgetDetails(id)}*/}
+          {/*//was working on this and was going to set it up as an if statement below*/}
 
-        <a
-          className="f6 dim br1 ba ph3 pv2 mb2 dib black pointer"
-          onClick={() =>
-            this.reviseBudget(id)}
-        >
-          Revise Budget Details
-        </a>{' '}
+        {/*>*/}
+        {/*Revise Budget Details*/}
+        {/*</a>*/}
+
+
+        {/*<a*/}
+          {/*className="f6 dim br1 ba ph3 pv2 mb2 dib black pointer"*/}
+          {/*onClick={() =>*/}
+            {/*}*/}
+        {/*>*/}
+          {/*Revise Budget Details*/}
+        {/*</a>*/}
+
+        {' '}
         <a
           className="f6 dim br1 ba ph3 pv2 mb2 dib black pointer"
           onClick={() => this.deleteBudget(id)}
@@ -63,6 +77,16 @@ class BudgetDetail extends Component {
     this.props.history.replace(`/budget/${this.props.budget.id}`) // updated this line to redirect to budget that was being updated
   }
 }
+
+//was working on this and was going to set it up as an if statement
+// const reviseBudgetDetails = async id => {
+//   return (
+//     <Fragment>
+//       <input type="text" value={this.props.label} onChange={event => this.setState({label : event.target.value})}/>
+//       <input type="text" value={this.props.note} onChange={event => this.setState({note : event.target.value})}/>
+//     </Fragment>
+//   )
+// }
 
 const BUDGET_QUERY = gql`
   query BudgetQuery($id: ID!) {
