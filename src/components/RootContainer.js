@@ -23,7 +23,7 @@ import BudgetsPage from './budget/BudgetsPage'
 import CreateBudget from './budget/CreateBudget'
 // import BudgetDetail from './budget/BudgetDetail'
 import BudgetDetail2 from './budget/BudgetDetail2'
-import ReviseBudget from './budget/ReviseBudget'
+// import ReviseBudget from './budget/ReviseBudget'
 
 
 const ProtectedRoute = ({ component: Component, token, ...rest }) => {
@@ -206,7 +206,7 @@ class RootContainer extends Component {
             component={CreateBudget}
           />
           <Route path="/budget/:id" component={BudgetDetail2} />
-          <Route path="/budget/reviseBudget/:id" component={ReviseBudget} />
+          {/*<Route path="/budget/reviseBudget/:id" component={ReviseBudget} />*/}
           <Route
             token={this.state.token}
             path="/login"

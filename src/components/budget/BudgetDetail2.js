@@ -130,7 +130,7 @@ class BudgetDetail extends Component {
 
   reviseBudget = async id => {
     await this.props.reviseBudget({
-      variables: { id },
+      variables: { id, label: this.state.label, note: this.state.note },
     })
     this.props.history.replace('/budgets')
 
