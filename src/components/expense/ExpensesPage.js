@@ -1,17 +1,17 @@
 import React, { Component, Fragment } from 'react'
-import Budget from './Budget'
+import Expense from './Expense'
 import { graphql } from 'react-apollo'
 import  { gql } from 'apollo-boost'
 
-class BudgetsPage extends Component {
+class ExpensesPage extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.location.key !== nextProps.location.key) {
-      this.props.budgetsQuery.refetch()
+      this.props.expensesQuery.refetch()
     }
   }
 
   render() {
-    if (this.props.budgetsQuery.loading) {
+    if (this.props.expensesQuery.loading) {
       return (
         <div className="flex w-100 h-100 items-center justify-center pt7">
           <div>Loading (from {process.env.REACT_APP_GRAPHQL_ENDPOINT})</div>
@@ -22,13 +22,13 @@ class BudgetsPage extends Component {
     return (
       <Fragment>
         <div className="flex justify-between items-center">
-          <h1>Budgets</h1>
+          <h1>Expenses</h1>
         </div>
-        {this.props.budgetsQuery.budgets &&
-          this.props.budgetsQuery.budgets.map(budget => (
-            <Budget
-              key={budget.id}
-              budget={budget}
+        {this.props.expensesQuery.expenses &&
+          this.props.expensesQuery.expenses.map(expense => (
+            <Expense
+              key={expense.id}
+              budget={expense}
               // refresh={() => this.props.budgetsQuery.refetch()}
             />
           ))}
@@ -38,12 +38,12 @@ class BudgetsPage extends Component {
   }
 }
 
-const BUDGETS_QUERY = gql`
-  query BudgetsQuery {
-    budgets {
+const EXPENSES_QUERY = gql`
+  query ExpensesQuery {
+    expenses {
       id
-      label
-      note
+      exp_name
+      exp_amt
       author {
         name
       }
@@ -51,9 +51,9 @@ const BUDGETS_QUERY = gql`
   }
 `
 
-export default graphql(BUDGETS_QUERY, {
-  name: 'budgetsQuery',
+export default graphql(EXPENSES_QUERY, {
+  name: 'expensesQuery',
   options: {
     fetchPolicy: 'network-only',
   },
-})(BudgetsPage)
+})(ExpensesPage)

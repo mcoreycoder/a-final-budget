@@ -2,15 +2,14 @@ import React, { Component, Fragment } from 'react'
 import { graphql, compose } from 'react-apollo'
 import { withRouter } from 'react-router-dom'
 import  { gql } from 'apollo-boost'
-// import ExpensesPage from '../expense/ExpensesPage'
 
 
-class BudgetDetail extends Component {
+class ExpenseDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      label: '',
-      note: '',
+      exp_name: '',
+      exp_amt: '',
       mode:'view'
     };
 
@@ -20,7 +19,7 @@ class BudgetDetail extends Component {
   }
 
   render() {
-    if (this.props.budgetQuery.loading) {
+    if (this.props.expenseQuery.loading) {
       return (
         <div className="flex w-100 h-100 items-center justify-center pt7">
           <div>Loading (from {process.env.REACT_APP_GRAPHQL_ENDPOINT})</div>
@@ -28,9 +27,9 @@ class BudgetDetail extends Component {
       )
     }
 
-    const { budget } = this.props.budgetQuery
+    const { expense } = this.props.expenseQuery
 
-    let action = this._renderAction(budget)
+    let action = this._renderAction(expense)
 
     return (
       <Fragment>
@@ -39,7 +38,6 @@ class BudgetDetail extends Component {
           <br/>
           {action}
         </div>
-        {/*<ExpensesPage/>*/}
       </Fragment>
     )
   }
@@ -54,7 +52,7 @@ class BudgetDetail extends Component {
           </button>
           <button
             className="f6 dim br1 ba ph3 pv2 mb2 dib black pointer"
-            onClick={() => this.deleteBudget(id)}
+            onClick={() => this.deleteExpense(id)}
           >
             Delete
           </button>
@@ -65,7 +63,7 @@ class BudgetDetail extends Component {
         <Fragment>
           <button
             className="f6 dim br1 ba ph3 pv2 mb2 dib black pointer"
-            onClick={() => this.reviseBudget(id)}
+            onClick={() => this.reviseExpense(id)}
           >
             Update
           </button>
@@ -81,27 +79,27 @@ class BudgetDetail extends Component {
 
   renderInputField() {
 
-    const { budget } = this.props.budgetQuery
+    const { expense } = this.props.expenseQuery
 
     if(this.state.mode === 'view') {
-      return <Fragment><h1 className="f3 black-80 fw4 lh-solid">Label: {budget.label}</h1>
-        <p className="black-80 fw3">Note: {budget.note}</p>
+      return <Fragment><h1 className="f3 black-80 fw4 lh-solid">Exp_name: {expense.exp_name}</h1>
+        <p className="black-80 fw3">Exp_Amt: {expense.exp_amt}</p>
       </Fragment>
     } else {
       return (
         <Fragment>
-          <h1 className="f3 black-80 fw4 lh-solid">Label:
+          <h1 className="f3 black-80 fw4 lh-solid">Exp_name:
             <input
-              placeholder= {budget.label}
+              placeholder= {expense.exp_name}
               onChange={this.handleChange}
-              name = 'label'
+              name = 'exp_name'
             />
           </h1>
-          <p className="black-80 fw3">Note:
+          <p className="black-80 fw3">Exp_Amt:
             <input
-              placeholder= {budget.note}
+              placeholder= {expense.exp_amt}
               onChange={this.handleChange}
-              name = 'note'
+              name = 'exp_amt'
             />
           </p>
         </Fragment>
@@ -109,16 +107,16 @@ class BudgetDetail extends Component {
     }
   }
 
-  deleteBudget = async id => {
-    await this.props.deleteBudget({
+  deleteExpense = async id => {
+    await this.props.deleteExpense({
       variables: { id },
     })
     this.props.history.replace('/budgets')
   }
 
-  reviseBudget = async id => {
-    await this.props.reviseBudget({
-      variables: { id, label: this.state.label, note: this.state.note },
+  reviseExpense = async id => {
+    await this.props.reviseExpense({
+      variables: { id, exp_name: this.state.exp_name, exp_amt: this.state.exp_amt },
     })
     this.setState({
       mode: 'view'
@@ -145,12 +143,12 @@ class BudgetDetail extends Component {
 
 }
 
-const BUDGET_QUERY = gql`
-  query BudgetQuery($id: ID!) {
-    budget(id: $id) {
+const EXPENSE_QUERY = gql`
+  query ExpenseQuery($id: ID!) {
+    expense(id: $id) {
       id
-      label
-      note
+      exp_name
+      exp_amt
       author {
         name
       }
@@ -158,27 +156,27 @@ const BUDGET_QUERY = gql`
   }
 `
 
-const REVISEBUDGET_MUTATION = gql`
-  mutation ReviseBudget($id: ID!, $label: String!, $note: String!) {
-    reviseBudget(id: $id, label: $label, note: $note) {
+const REVISEEXPENSE_MUTATION = gql`
+  mutation ReviseExpense($id: ID!, $exp_name: String!, $exp_amt: Float!) {
+    reviseExpense(id: $id, exp_name: $exp_name, exp_amt: $exp_amt) {
       id
-      label
-      note
+      exp_name
+      exp_amt
     }
   }
 `
 
 const DELETE_MUTATION = gql`
-  mutation deleteBudget($id: ID!) {
-    removeBudget(id: $id) {
+  mutation deleteExpense($id: ID!) {
+    removeExpense(id: $id) {
       id
     }
   }
 `
 
 export default compose(
-  graphql(BUDGET_QUERY, {
-    name: 'budgetQuery',
+  graphql(EXPENSE_QUERY, {
+    name: 'expenseQuery',
     options: props => ({
       variables: {
         id: props.match.params.id,
@@ -186,11 +184,11 @@ export default compose(
     }),
   }),
 
-  graphql(REVISEBUDGET_MUTATION, {
-    name: 'reviseBudget',
+  graphql(REVISEEXPENSE_MUTATION, {
+    name: 'reviseExpense',
   }),
   graphql(DELETE_MUTATION, {
-    name: 'deleteBudget',
+    name: 'deleteExpense',
   }),
   withRouter,
-)(BudgetDetail)
+)(ExpenseDetail)
