@@ -74,22 +74,60 @@ class BudgetDetail extends Component {
   renderButton() {
     if(this.state.mode === 'view') {
       return (
-        <button className="f6 dim br1 ba ph3 pv2 mb2 dib black pointer" onClick={this.handleEdit}>
+        <button className="f6 dim br1 ba ph3 pv2 mb2 dib black pointer"
+                onClick={this.handleEdit}>
           Edit
         </button>
       );
     } else {
       return (
-        <button className="f6 dim br1 ba ph3 pv2 mb2 dib black pointer" onClick={this.handleSave}>
+        <button className="f6 dim br1 ba ph3 pv2 mb2 dib black pointer"
+                onClick={this.handleSave}>
           Save
         </button>
       );
     }
   }
 
+  // renderInputField1() {
+  //   if(this.state.mode === 'view') {
+  //     return <h1 className="f3 black-80 fw4 lh-solid">Label: {this.state.label}</h1>
+  //   } else {
+  //     return (
+  //       <h1 className="f3 black-80 fw4 lh-solid">Label:
+  //         <input
+  //           placeholder= {this.state.label}
+  //           onChange={this.handleChange}
+  //           value={this.state.inputLabel}
+  //           name = 'inputLabel'
+  //         />
+  //       </h1>
+  //     );
+  //   }
+  // }
+  // renderInputField2() {
+  //   if(this.state.mode === 'view') {
+  //     return <p className="black-80 fw3">Note: {this.state.note}</p>;
+  //   } else {
+  //     return (
+  //       <p className="black-80 fw3">Note:
+  //         <input
+  //           placeholder= {this.props.note}
+  //           onChange={this.handleChange}
+  //           value={this.state.inputNote}
+  //           name = 'inputNote'
+  //         />
+  //       </p>
+  //     );
+  //   }
+  // }
+
   renderInputField1() {
+
+    const { budget } = this.props.budgetQuery
+
     if(this.state.mode === 'view') {
-      return <h1 className="f3 black-80 fw4 lh-solid">Label: {this.state.label}</h1>
+      return <h1 className="f3 black-80 fw4 lh-solid">Label: {budget.label}</h1>
     } else {
       return (
         <h1 className="f3 black-80 fw4 lh-solid">Label:
@@ -104,8 +142,11 @@ class BudgetDetail extends Component {
     }
   }
   renderInputField2() {
+
+    const { budget } = this.props.budgetQuery
+
     if(this.state.mode === 'view') {
-      return <p className="black-80 fw3">Note: {this.state.note}</p>;
+      return <p className="black-80 fw3">Note: {budget.note}</p>;
     } else {
       return (
         <p className="black-80 fw3">Note:
@@ -130,7 +171,7 @@ class BudgetDetail extends Component {
 
   reviseBudget = async id => {
     await this.props.reviseBudget({
-      variables: { id },
+      variables: { id, label: this.state.label, note: this.state.note },
     })
     this.props.history.replace('/budgets')
 
@@ -159,7 +200,8 @@ class BudgetDetail extends Component {
     this.setState({
       label: this.state.inputLabel,
       note: this.state.inputNote,
-      mode: 'view'});
+      mode: 'view'
+    });
   }
 
   handleEdit() {

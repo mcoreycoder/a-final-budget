@@ -10,14 +10,15 @@ class BudgetDetail extends Component {
     this.state = {
       label: '',
       note: '',
-      inputLabel: '',
-      inputNote: '',
+      // inputLabel: '',
+      // inputNote: '',
       mode:'view'
     };
 
     this.handleChange = this.handleChange.bind(this);
-    this.handleSave = this.handleSave.bind(this);
+    // this.handleSave = this.handleSave.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
   }
 
   render() {
@@ -35,14 +36,13 @@ class BudgetDetail extends Component {
 
     return (
       <Fragment>
-        <h1 className="f3 black-80 fw4 lh-solid">Label: {budget.label}</h1>
-        <p className="black-80 fw3">Note: {budget.note}</p>
+        {/*<h1 className="f3 black-80 fw4 lh-solid">Label: {budget.label}</h1>*/}
+        {/*<p className="black-80 fw3">Note: {budget.note}</p>*/}
 
         <div>
-          {this.renderInputField1()}
+          {this.renderInputField()}
           <br/>
-          {this.renderInputField2()}
-          {this.renderButton()}
+          {/*{this.renderButton()}*/}
           {action}
 
         </div>
@@ -52,70 +52,88 @@ class BudgetDetail extends Component {
 
   // below performs the delete
   _renderAction = ({id}) => {
-    return (
-      <Fragment>
-        <button
-          className="f6 dim br1 ba ph3 pv2 mb2 dib black pointer"
-          onClick={() => this.deleteBudget(id)}
-        >
-          Delete
-        </button>
-        <button
-          className="f6 dim br1 ba ph3 pv2 mb2 dib black pointer"
-          onClick={() => this.reviseBudget(id)}
-        >
-          revise
-        </button>
-      </Fragment>
-
-    )
-  }
-
-  renderButton() {
-    if(this.state.mode === 'view') {
+    if (this.state.mode === 'view') {
       return (
-        <button className="f6 dim br1 ba ph3 pv2 mb2 dib black pointer" onClick={this.handleEdit}>
-          Edit
-        </button>
-      );
+        <Fragment>
+          <button className="f6 dim br1 ba ph3 pv2 mb2 dib black pointer"
+                  onClick={this.handleEdit}>
+            Edit
+          </button>
+          <button
+            className="f6 dim br1 ba ph3 pv2 mb2 dib black pointer"
+            onClick={() => this.deleteBudget(id)}
+          >
+            Delete
+          </button>
+        </Fragment>
+      )
     } else {
       return (
-        <button className="f6 dim br1 ba ph3 pv2 mb2 dib black pointer" onClick={this.handleSave}>
-          Save
-        </button>
-      );
+        <Fragment>
+          <button
+            className="f6 dim br1 ba ph3 pv2 mb2 dib black pointer"
+            onClick={() => this.reviseBudget(id)}
+          >
+            Update
+          </button>
+          <button className="f6 dim br1 ba ph3 pv2 mb2 dib black pointer"
+                  onClick={this.handleCancel}>
+            Cancel
+          </button>
+        </Fragment>
+
+      )
     }
   }
 
-  renderInputField1() {
+  // renderButton() {
+  //   if (this.state.mode === 'view') {
+  //     return (
+  //       <button
+  //         className="f6 dim br1 ba ph3 pv2 mb2 dib black pointer"
+  //         onClick={this.handleEdit}>
+  //         Edit
+  //       </button>
+  //     )
+  //   } else {
+  //     return (
+  //       <button
+  //         className="f6 dim br1 ba ph3 pv2 mb2 dib black pointer"
+  //         onClick={this.handleSave}>
+  //         Save
+  //       </button>
+  //     )
+  //   }
+  // }
+
+  renderInputField() {
+
+    const { budget } = this.props.budgetQuery
+
     if(this.state.mode === 'view') {
-      return <h1 className="f3 black-80 fw4 lh-solid">Label: {this.state.label}</h1>
+      return <Fragment><h1 className="f3 black-80 fw4 lh-solid">Label: {budget.label}</h1>
+        <p className="black-80 fw3">Note: {budget.note}</p>
+      </Fragment>
     } else {
       return (
+        <Fragment>
         <h1 className="f3 black-80 fw4 lh-solid">Label:
           <input
-            placeholder= {this.state.label}
+            placeholder= {budget.label}
             onChange={this.handleChange}
-            value={this.state.inputLabel}
-            name = 'inputLabel'
+            // value={this.state.label}
+            name = 'label'
           />
         </h1>
-      );
-    }
-  }
-  renderInputField2() {
-    if(this.state.mode === 'view') {
-      return <p className="black-80 fw3">Note: {this.state.note}</p>;
-    } else {
-      return (
-        <p className="black-80 fw3">Note:
-          <input
-            placeholder= {this.props.note}
-            onChange={this.handleChange}
-            value={this.state.inputNote}
-            name = 'inputNote'
-          />
-        </p>
+          <p className="black-80 fw3">Note:
+            <input
+              placeholder= {budget.note}
+              onChange={this.handleChange}
+              // value={this.state.note}
+              name = 'note'
+            />
+          </p>
+        </Fragment>
       );
     }
   }
@@ -135,14 +153,11 @@ class BudgetDetail extends Component {
     this.props.history.replace('/budgets')
 
     // this.props.history.replace(`/budget/${this.props.budget.id}`) // updated this line to redirect to budget that was being updated
-  }
 
-  // handleChange(e) {
-  //   this.setState({
-  //     inputLabel: e.target.value1,
-  //     inputNote: e.target.value2,
-  //   });
-  // }
+    this.setState({
+      mode: 'view'
+    });
+  }
 
   //trying below for two value targets, seems to work but not as intended
   handleChange(e) {
@@ -151,19 +166,23 @@ class BudgetDetail extends Component {
     const name = target.name;
 
     this.setState({
-      [name]: value
+      [name]: value,
     });
   }
 
-  handleSave() {
-    this.setState({
-      label: this.state.inputLabel,
-      note: this.state.inputNote,
-      mode: 'view'});
-  }
+  // handleSave() {
+  //   this.setState({
+  //     label: this.state.inputLabel,
+  //     note: this.state.inputNote,
+  //     mode: 'view'});
+  // }
 
   handleEdit() {
     this.setState({mode: 'edit'});
+  }
+
+  handleCancel() {
+    this.setState({mode: 'view'});
   }
 
 }
