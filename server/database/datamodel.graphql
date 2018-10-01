@@ -3,6 +3,7 @@ type Expense {
   exp_name: String
   exp_amt: Float
   author: User!
+  budget: Budget!
 }
 
 
@@ -10,6 +11,7 @@ type Category {
   id: ID! @unique
   category_name: String! @unique
   expenses: [Expense!]!
+  budgets: [Budget!]!
   author: User!
 }
 
@@ -31,5 +33,6 @@ type User {
   name: String!
   budgets: [Budget!]!
   categorys: [Category!]!
+  expenses: [Expense!]!
 }
 

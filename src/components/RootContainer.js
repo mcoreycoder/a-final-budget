@@ -165,7 +165,7 @@ class RootContainer extends Component {
           <Route path="/budget/:id" component={BudgetDetail}/>
 
 
-          <Route exact path="/" component={ExpensesPage}/>
+          {/*<Route exact path="/" component={ExpensesPage}/>*/}
           <ProtectedRoute
             token={this.state.token}
             path="/expenses"

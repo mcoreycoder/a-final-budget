@@ -2,7 +2,8 @@ import React, { Component, Fragment } from 'react'
 import { graphql, compose } from 'react-apollo'
 import { withRouter } from 'react-router-dom'
 import  { gql } from 'apollo-boost'
-// import ExpensesPage from '../expense/ExpensesPage'
+import ExpensesPage from '../expense/ExpensesPage'
+import CreateExpense from '../expense/CreateExpense'
 
 
 class BudgetDetail extends Component {
@@ -39,7 +40,8 @@ class BudgetDetail extends Component {
           <br/>
           {action}
         </div>
-        {/*<ExpensesPage/>*/}
+        <ExpensesPage/>
+        <CreateExpense/>
       </Fragment>
     )
   }

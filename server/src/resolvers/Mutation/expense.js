@@ -1,15 +1,15 @@
-const { getUserId } = require('../../utils')
+const { getBudgetId } = require('../../utils')
 
 const expense = {
   async setExpense(parent, { exp_name, exp_amt }, ctx, info) {
-    const userId = getUserId(ctx)
+    const budgetId = getBudgetId(ctx)
     return ctx.db.mutation.createExpense(
       {
         data: {
           exp_name,
           exp_amt,
           author: {
-            connect: { id: userId },
+            connect: { id: budgetId },
           },
         },
       },
@@ -18,10 +18,10 @@ const expense = {
   },
 
   async reviseExpense(parent, { id }, ctx, info) {
-    const userId = getUserId(ctx)
+    const budgetId = getBudgetId(ctx)
     const expenseExists = await ctx.db.exists.Expense({
       id,
-      author: { id: userId },
+      author: { id: budgetId },
     })
     if (!expenseExists) {
       throw new Error(`Expense not found or you're not the author`)
@@ -37,10 +37,10 @@ const expense = {
   },
 
   async removeExpense(parent, { id }, ctx, info) {
-    const userId = getUserId(ctx)
+    const budgetId = getBudgetId(ctx)
     const expenseExists = await ctx.db.exists.Expense({
       id,
-      author: { id: userId },
+      author: { id: budgetId },
     })
     if (!expenseExists) {
       throw new Error(`Expense not found or you're not the author`)

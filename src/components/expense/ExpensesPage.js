@@ -28,8 +28,8 @@ class ExpensesPage extends Component {
           this.props.expensesQuery.expenses.map(expense => (
             <Expense
               key={expense.id}
-              budget={expense}
-              // refresh={() => this.props.budgetsQuery.refetch()}
+              expense={expense}
+              // refresh={() => this.props.expensesQuery.refetch()}
             />
           ))}
         {this.props.children}
@@ -46,6 +46,9 @@ const EXPENSES_QUERY = gql`
       exp_amt
       author {
         name
+      }
+      budget {
+        id
       }
     }
   }
