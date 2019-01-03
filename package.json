@@ -2,6 +2,7 @@
   "name": "react-apollo-instagram-example",
   "version": "0.0.1",
   "private": true,
+  "homepage": ""
   "devDependencies": {
     "babel-eslint": "7.2.3",
     "eslint": "4.19.1",
@@ -25,6 +26,7 @@
     "eslint-config-prettier": "2.9.0",
     "eslint-plugin-babel": "4.1.2",
     "eslint-plugin-prettier": "2.6.2",
+    "gh-pages": "^2.0.1",
     "graphql": "0.13.2",
     "graphql-tag": "2.9.2",
     "react": "16.4.1",
@@ -42,9 +44,11 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
+    “predeploy”: "npm run build",
+    “deploy”: "gh-pages -d build",
     "eject": "react-scripts eject",
     "prettier": "prettier-eslint --write \"src/**/*.+(js|jsx)\"",
-    "prettier-dry-run": "prettier-eslint \"src/**/*.+(js|jsx)\" -l debug"
+    "prettier-dry-run": "prettier-eslint \"src/**/*.+(js|jsx)\" -l debug",
   },
   "prettier": {
     "semi": false,
