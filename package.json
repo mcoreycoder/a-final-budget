@@ -48,7 +48,7 @@
     "deploy": "gh-pages -d build",
     "eject": "react-scripts eject",
     "prettier": "prettier-eslint --write \"src/**/*.+(js|jsx)\"",
-    "prettier-dry-run": "prettier-eslint \"src/**/*.+(js|jsx)\" -l debug",
+    "prettier-dry-run": "prettier-eslint \"src/**/*.+(js|jsx)\" -l debug"
   },
   "prettier": {
     "semi": false,
