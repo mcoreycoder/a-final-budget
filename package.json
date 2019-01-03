@@ -2,7 +2,7 @@
   "name": "react-apollo-instagram-example",
   "version": "0.0.1",
   "private": true,
-  "homepage": ""
+  "homepage": "https://mcoreycoder.github.io/a-final-budget/"
   "devDependencies": {
     "babel-eslint": "7.2.3",
     "eslint": "4.19.1",
